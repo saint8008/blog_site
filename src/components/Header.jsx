@@ -1,5 +1,7 @@
-export default function Header() {
+export default function Header({ name }) {
     return(
-        <div>This is the header</div>
+        <div className="flex font-bold justify-center items-center mb-4  w-full">
+            <header>{name}</header>
+        </div>
     )
 }
