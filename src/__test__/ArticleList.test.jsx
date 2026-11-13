@@ -1,5 +1,8 @@
-import { render, screen, within } from "@testing-library/react";
+import { describe, test, expect, vi, afterEach } from "vitest";
+import { render, screen, within, cleanup } from "@testing-library/react";
 import ArticleList from "../components/ArticleList";
+
+afterEach(cleanup);
 
 const posts = [
   { id: 1, title: "Post One", date: "2026-01-01", preview: "Preview one" },
@@ -10,7 +13,7 @@ const posts = [
 describe("ArticleList", () => {
   test("renders a main element", () => {
     render(<ArticleList posts={posts} />);
-    expect(screen.getByRole("main")).toBeInTheDocument();
+    expect(screen.getByRole("main")).toBeTruthy();
   });
 
   test("renders one Article per post, inside main", () => {
@@ -22,9 +25,9 @@ describe("ArticleList", () => {
   test("displays each post's title, date and preview", () => {
     render(<ArticleList posts={posts} />);
     posts.forEach(({ title, date, preview }) => {
-      expect(screen.getByText(title)).toBeInTheDocument();
-      expect(screen.getByText(date)).toBeInTheDocument();
-      expect(screen.getByText(preview)).toBeInTheDocument();
+      expect(screen.getByText(title)).toBeTruthy();
+      expect(screen.getByText(date)).toBeTruthy();
+      expect(screen.getByText(preview)).toBeTruthy();
     });
   });
 
@@ -34,11 +37,11 @@ describe("ArticleList", () => {
   });
 
   test("does not log a missing-key warning", () => {
-    const spy = jest.spyOn(console, "error").mockImplementation(() => {});
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
     render(<ArticleList posts={posts} />);
 
     const keyWarnings = spy.mock.calls.filter((call) =>
-      String(call[0]).includes("unique \"key\" prop")
+      String(call[0]).includes('unique "key" prop')
     );
     expect(keyWarnings).toHaveLength(0);
 
