@@ -5,7 +5,7 @@ import ArticleList from "./components/ArticleList.jsx";
 export default function App() {
   return(
     <div>
-      <Header />
+      <Header name="My New Blog"/>
       <About />
       <ArticleList />
     </div>
